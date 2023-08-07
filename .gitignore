@@ -1,0 +1,5 @@
+# Ignore specific file types
+*.env
+*.pickle
+*.pdf
+*.bin
