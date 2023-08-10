@@ -3,3 +3,4 @@
 *.pickle
 *.pdf
 *.bin
+sentence_transformers

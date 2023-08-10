@@ -4,7 +4,13 @@ from langchain.llms.base import LLM
 from gradio_client import Client
 
 class LLM_gradioAPI(LLM):
+    """
+    This is a wrapper for gradi APIs for LLMs to use with langchain library.
+    The attributes to specify are client_api and api_name.
+    """
     n: int
+    client_api = ""
+    api_name = ""
 
     @property
     def _llm_type(self) -> str:
@@ -22,8 +28,8 @@ class LLM_gradioAPI(LLM):
 
 
         # Make the API call using the Gradio Client
-        client = Client("https://ysharma-explore-llamav2-with-tgi.hf.space/")
-        result = client.predict(prompt, api_name="/chat_1")
+        client = Client(self.client_api)
+        result = client.predict(prompt, api_name=self.api_name)
 
         # Return the response from the API
         return result
