@@ -4,3 +4,4 @@
 *.pdf
 *.bin
 sentence_transformers
+models

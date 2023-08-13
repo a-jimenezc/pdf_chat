@@ -20,13 +20,29 @@ def qa_convertational_chain_function(
     ConversationalRetrievalChain object.
     """
 
-    # Build prompt
-    template = """Use the following pieces of context to answer the question at the end. If you don't know the answer, just say that you don't know, don't try to make up an answer. 
-    Answer in the same language as the Question language.
-    {context}
-    Question: {question}
-    Helpful Answer:"""
+    # Build prompts
+    template = """Utiliza los siguientes fragmentos de contexto para responder la pregunta al final. Si no conoces la respuesta, simplemente di que no lo sabes, no trates de inventar una respuesta.
+    Responde en el mismo idioma que el idioma de la pregunta.
+        {context}
+        Pregunta: {question}
+        Respuesta útil:"""
     QA_CHAIN_PROMPT = PromptTemplate.from_template(template)
+
+    follow_up_template = """Dada la siguiente conversación y una pregunta de seguimiento, reformula la pregunta de seguimiento para que sea una pregunta independiente, en su idioma original.
+
+    conversación:
+    {chat_history}
+    pregunta de seguimiento: {question}
+    pregunta independiente:"""
+
+    condense_question_prompt = PromptTemplate(
+        input_variables=['chat_history', 'question'],
+        output_parser=None,
+        partial_variables={},
+        template=follow_up_template,
+        template_format='f-string',
+        validate_template=True
+        )
     
     # Creating vector db
     loader = PyPDFLoader(file)
@@ -55,6 +71,7 @@ def qa_convertational_chain_function(
         retriever=retreiver,
         return_source_documents=True,
         return_generated_question=True,
+        condense_question_prompt=condense_question_prompt,
         verbose = False,
         combine_docs_chain_kwargs={"prompt": QA_CHAIN_PROMPT}
     )
