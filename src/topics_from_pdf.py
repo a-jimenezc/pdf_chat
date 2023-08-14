@@ -77,7 +77,14 @@ def topics_from_pdf(llm, file, num_topics, words_per_topic):
     - <<<Frase que describe primer subtema)>>>
     - <<<(Frase que describe segundo subtema)>>>
     - <<<Frase que describe tercer subtema)>>>
+    
+    ...
 
+    Tema  n: <<<(oración que describe el tema)>>>
+    - <<<Frase que describe primer subtema)>>>
+    - <<<(Frase que describe segundo subtema)>>>
+    - <<<Frase que describe tercer subtema)>>>
+    
     Listas: """{string_lda}""" '''
 
     prompt_template = ChatPromptTemplate.from_template(template_string)
