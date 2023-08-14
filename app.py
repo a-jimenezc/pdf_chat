@@ -160,7 +160,8 @@ with gr.Blocks(css=css) as demo:
         # Interactivity
         model_dropdown.input(input_openai_key, [model_dropdown], [input_key, upload_btn, llm_var])
         model_api_textbox.submit(input_model, [model_api_textbox], [input_key, upload_btn, llm_var])                 
-        btn.upload(summary, [btn, llm_var], [output_summary, file_doc, processing_note, llm_var], queue=False).success(
+        btn.upload(summary, [btn, llm_var], 
+                   [output_summary, file_doc, processing_note, llm_var], queue=False).success(
             conversation_vars, [file_doc, llm_var], [memory_var, qa_chain_var, output_col, processing_note]
             )
         input_msg.submit(respond, 
@@ -178,4 +179,4 @@ with gr.Blocks(css=css) as demo:
         gr.Markdown("Antonio Jimenez Caballero")
 
 demo.queue(concurrency_count=5,  max_size=10, api_open=False)
-demo.launch()
+demo.launch(server_name="0.0.0.0", server_port=8080)
