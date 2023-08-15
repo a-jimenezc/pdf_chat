@@ -14,8 +14,6 @@ def get_topic_lists_from_pdf(file, num_topics, words_per_topic):
     Uses LDA algoritm for topic discovery
     Returns: list of num_topics lists with relevant words for each topic (nested list).
     """
-
-
     loader = PdfReader(file)
 
     documents= []

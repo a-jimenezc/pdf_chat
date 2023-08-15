@@ -5,6 +5,8 @@ from src import LLM_gradioAPI
 from src import topics_from_pdf
 from src import qa_convertational_chain_function
 from langchain.llms import OpenAI
+from pages.about import author
+from pages.about import intro
 
 # Define the LLM endpoint
 
@@ -13,7 +15,7 @@ footer {visibility: hidden}
 .feedback textarea {font-size: 40px !important} 
 """
 
-with gr.Blocks(css=css) as demo:
+with gr.Blocks(css=css, title="Pregunta al PDF") as demo:
 
     # Sesion variables
     file_doc = gr.State()
@@ -103,7 +105,7 @@ with gr.Blocks(css=css) as demo:
 
         bot_message = response
         chat_history.append([query, bot_message])
-        references = "\n".join(["\nPágina no. " + str(doc.metadata["page"]) + "\n" + doc.page_content[:150] + "..." for doc in source_docs])
+        references = "\n".join(["\nPágina no. " + str(doc.metadata["page"]) + "\n" + doc.page_content + "..." for doc in source_docs])
         time.sleep(2)
         return {
             input_msg : "",
@@ -175,8 +177,11 @@ with gr.Blocks(css=css) as demo:
             )
 
     with gr.Tab("Acerca de"):
-        gr.Markdown("## Autor:\n")
-        gr.Markdown("Antonio Jimenez Caballero")
+        #gr.Markdown("## Autor:\n")
+        #gr.Markdown("Antonio Jimenez Caballero")
+        gr.Markdown(intro)
+        gr.Markdown(author)
 
 demo.queue(concurrency_count=5,  max_size=10, api_open=False)
-demo.launch(server_name="0.0.0.0", server_port=8080)
+demo.launch()
+#demo.launch(server_name="0.0.0.0", server_port=8080)
