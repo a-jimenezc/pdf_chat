@@ -5,8 +5,7 @@ from src import LLM_gradioAPI
 from src import topics_from_pdf
 from src import qa_convertational_chain_function
 from langchain.llms import OpenAI
-from pages.about import author
-from pages.about import intro
+from pages.about import intro_html, author_html
 
 # Define the LLM endpoint
 
@@ -74,7 +73,7 @@ with gr.Blocks(css=css, title="Pregunta al PDF") as demo:
             processing_note: gr.update(visible=True),
             llm_var : llm_model
         }
-        
+
     def conversation_vars(file, llm_model):
         """
         Initializes the chat sesion variables and stores them temporarily.
@@ -177,11 +176,9 @@ with gr.Blocks(css=css, title="Pregunta al PDF") as demo:
             )
 
     with gr.Tab("Acerca de"):
-        #gr.Markdown("## Autor:\n")
-        #gr.Markdown("Antonio Jimenez Caballero")
-        gr.Markdown(intro)
-        gr.Markdown(author)
+        gr.Markdown(intro_html)
+        gr.HTML(author_html)
 
 demo.queue(concurrency_count=5,  max_size=10, api_open=False)
-demo.launch()
-#demo.launch(server_name="0.0.0.0", server_port=8080)
+#demo.launch()
+demo.launch(server_name="0.0.0.0", server_port=8080)
