@@ -160,7 +160,8 @@ with gr.Blocks(css=css, title="Pregunta al PDF") as demo:
             gr.Markdown('\n ## <p style="text-align: center;">Cargando el modelo y resumiendo el documento...</p>')
             gr.Markdown('<p style="text-align: center;">Esto no debería demorar más de un minuto para documentos de menos de 30 páginas. \
                         Si no hay respuesta, puede que el modelo se encuentre temporalmente fuera de servicio. \
-                        En este caso, refrescar la página y seleccionar otro modelo en el menú ubicado en la parte superior izquierda.</p>')
+                        En este caso, refrescar la página y seleccionar otro modelo en el menú ubicado en la parte superior izquierda. \
+                        Pronto se darán mas opciones.</p>')
         output_summary = gr.Textbox(label="Breve resumen del documento")
         with gr.Column(visible=False) as processing_note:
             gr.Markdown('\n ## <p style="text-align: center;">Procesando PDF...</p>')
@@ -229,5 +230,5 @@ with gr.Blocks(css=css, title="Pregunta al PDF") as demo:
         gr.HTML(author_html)
 
 demo.queue(concurrency_count=5,  max_size=10, api_open=False)
-demo.launch()
-#demo.launch(server_name="0.0.0.0", server_port=8080)
+#demo.launch()
+demo.launch(server_name="0.0.0.0", server_port=8080)
