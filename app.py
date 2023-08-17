@@ -180,5 +180,5 @@ with gr.Blocks(css=css, title="Pregunta al PDF") as demo:
         gr.HTML(author_html)
 
 demo.queue(concurrency_count=5,  max_size=10, api_open=False)
-#demo.launch()
-demo.launch(server_name="0.0.0.0", server_port=8080)
+demo.launch()
+#demo.launch(server_name="0.0.0.0", server_port=8080)
