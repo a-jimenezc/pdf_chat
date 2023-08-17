@@ -14,13 +14,24 @@ def qa_convertational_chain_function(
         ):
     
     """
-    Parameters
-    chain_type: The chain type to use to create the combine_docs_chain, will be sent to load_qa_chain.
-    Returns 
-    ConversationalRetrievalChain object.
+    Generates a ConversationalRetrievalChain object for question-answering based on input parameters.
+
+    This function constructs and configures a ConversationalRetrievalChain for question-answering using 
+    the provided parameters. The chain is designed to generate relevant answers based on the given context 
+    and questions.
+
+    Parameters:
+        file (str): The path to the PDF file for building a vector database.
+        llm (LLM): An instance of the Large Language Model (LLM) for generating responses.
+        chain_type (str): The type of chain to create (e.g., "stuff", "map reduce").
+        retreiver_search_type (str): The search type for the retriever (e.g., "mmr").
+        retreiver_k (int): The number of retrieved documents to use in the context when asking questions.
+
+    Returns:
+        ConversationalRetrievalChain: A configured ConversationalRetrievalChain object for question-answering.
     """
 
-    # Build prompts
+    # Building prompts
     template = """Utiliza los siguientes fragmentos de contexto para responder la pregunta al final. Si no conoces la respuesta, simplemente di que no lo sabes, no trates de inventar una respuesta.
     Responde en el mismo idioma que el idioma de la pregunta.
         {context}
@@ -59,12 +70,12 @@ def qa_convertational_chain_function(
         cache_folder="./sentence_transformers"
         )
     vectordb = FAISS.from_documents(chunks, embedding=embeddings)
-
     retreiver = vectordb.as_retriever(
         search_type=retreiver_search_type, 
         search_kwargs={"k": retreiver_k}
         )
 
+    # Creating the chain
     qa_chain = ConversationalRetrievalChain.from_llm(
         llm=llm,
         chain_type=chain_type, 

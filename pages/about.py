@@ -1,21 +1,28 @@
 import gradio as gr
 
+modelos_html = """
+
+"""
+
+
+
 intro_html = """
 <html>
 <body>
     <p>
-        Esta app permite hacer preguntas a documentos en formato PDF. \
+        Esta app permite hacer preguntas a documentos en formato PDF en español. \
         Funciona con documentos de diez páginas, así como con libros de más \
-        de mil páginas. Esto es posible gracias al uso de tecnologías tales \
-        como los Grandes Modelos de Lenguaje (LLM por sus siglas en inglés), \
-        Bases de Datos Vectoriales, entre otras. Adicionalmente, se genera un índice \
-        basado en el contenido del documento, esto con el fin de resumir el contenido \
-        del mismo.
+        de mil páginas. Esto es posible gracias al uso de \
+        los Grandes Modelos de Lenguaje (LLM por sus siglas en inglés), \
+        Bases de Datos Vectoriales y algoritmos de procesamiento de texto. \
+        Adicionalmente, la app genera un índice \
+        basado en el contenido del documento. Este índice ofrece una guía al momento de \
+        hacer pregutnas. Finalmente, la app entrega los extractos del documento en los cuales \
+        basó su respuesta. Esto es muy útil en caso de necesitar validar la respuesta dada por el modelo.
     </p>
 </body>
 </html>
 """
-
 
 author_html = """
 <html>
