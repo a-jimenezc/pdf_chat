@@ -9,6 +9,7 @@ openai_key_html = """
         del navegador, esta información se elimina. Además, su uso se limita a la sesión del usuario
         que la ingresó.
         <br>
+        <br>
         Adicionalmente, se implementaron optimizaciones para limitar
         su uso, dado el costo que representa. Por ejemplo, para resumir el documento, 
         primero este se preprocesa en nuestros servidores con algoritmos de texto. 
@@ -20,6 +21,7 @@ openai_key_html = """
         esenciales para el chat. De esta forma y se hace innecesario el uso de los "Embeddings" de
         OpenAi, haciendo factible trabajar con documentos muy extensos sin incurrir en costos adicionales. 
         <br>
+        <br>
         Para obtener solicitar una "api key" ingresar a 
         <a href="https://platform.openai.com/account/billing/overview">"OpenAi, start payment plan"</a>.
         Una vez establecida la cuenta de pago, se puede solicitar la "api key" en 
@@ -27,6 +29,7 @@ openai_key_html = """
         Finalmente, se recomienda establecer un limite fijo para no incurrir en costos inadvertidos. Para
         ello se puede ingresar a 
         <a href="https://platform.openai.com/account/billing/limits">"OpenAi, Usage limits."</a>.
+        <br>
         <br>
         OpenAi recomienda no compartir esta información debido al costo que en que puede incurrir.
         Sin embargo, y repitiendo la nota inicial, esta aplicación usa este valor de forma temporal,
