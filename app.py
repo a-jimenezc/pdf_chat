@@ -6,6 +6,7 @@ from src import topics_from_pdf
 from src import qa_convertational_chain_function
 from langchain.llms import OpenAI
 from pages.about import intro_html, author_html
+from src.LLM_hugging_chat import LLM_hugging_chat
 
 css = """
 footer {visibility: hidden}
@@ -47,9 +48,7 @@ def summary(file, llm_model):
 
     # To use as default
     if llm_model is None:
-        llm_model = LLM_gradioAPI(n=2000) # hugging face repo
-        llm_model.client_api = "https://ysharma-explore-llamav2-with-tgi.hf.space/"
-        llm_model.api_name = "/chat_1"
+        llm_model = LLM_hugging_chat(n=2000)
 
     num_topics = 5
     words_per_topic = 30 # optimizar
@@ -140,20 +139,20 @@ with gr.Blocks(css=css, title="Pregunta al PDF") as demo:
     with gr.Tab("Inicio"):
 
         # Input
-        #with gr.Row(equal_height=True):
-        with gr.Column(scale=0.75, visible=True) as upload_uploaded_file:
-            uploaded_file = gr.UploadButton("Subir pdf 📁", file_types=["document"])
-        with gr.Column(scale=0.75, visible=False) as input_key:
-            model_api_textbox = gr.Textbox(
-                label="Introducir OpenAI api key y precionar Enter",
-                placeholder="sk-V8V..."
-                )
-        with gr.Column(scale=0.50, min_width=0):
-            model_dropdown = gr.Dropdown(
-                choices=["LLaMA 2", "GPT-3.5 Turbo"],
-                value="LLaMA 2",
-                label="Seleccionar modelo"
-                )
+        with gr.Row(equal_height=True):
+            with gr.Column(scale=0.25, min_width=0):
+                model_dropdown = gr.Dropdown(
+                    choices=["LLaMA 2", "GPT-3.5 Turbo"],
+                    value="LLaMA 2",
+                    label="Seleccionar modelo"
+                    )
+            with gr.Column(scale=0.75, visible=True) as upload_uploaded_file:
+                uploaded_file = gr.UploadButton("Subir pdf 📁", file_types=["document"])
+            with gr.Column(scale=0.75, visible=False) as input_key:
+                model_api_textbox = gr.Textbox(
+                    label="Introducir OpenAI api key y precionar Enter",
+                    placeholder="sk-V8V..."
+                    )
                 
         # Summary and processing notes
         with gr.Column(visible=False) as model_availability_note:
@@ -230,5 +229,5 @@ with gr.Blocks(css=css, title="Pregunta al PDF") as demo:
         gr.HTML(author_html)
 
 demo.queue(concurrency_count=5,  max_size=10, api_open=False)
-demo.launch()
-#demo.launch(server_name="0.0.0.0", server_port=8080)
+#demo.launch()
+demo.launch(server_name="0.0.0.0", server_port=8080)
