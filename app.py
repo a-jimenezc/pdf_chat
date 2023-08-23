@@ -142,8 +142,8 @@ with gr.Blocks(css=css, title="Pregunta al PDF") as demo:
         with gr.Row(equal_height=True):
             with gr.Column(scale=0.25, min_width=0):
                 model_dropdown = gr.Dropdown(
-                    choices=["LLaMA 2", "GPT-3.5 Turbo"],
-                    value="LLaMA 2",
+                    choices=["LLaMA 2 (experimental)", "GPT-3.5 Turbo"],
+                    value="LLaMA 2 (experimental)",
                     label="Seleccionar modelo"
                     )
             with gr.Column(scale=0.75, visible=True) as upload_uploaded_file:
