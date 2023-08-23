@@ -1,12 +1,11 @@
 import time
 import gradio as gr
 from langchain.memory import ConversationBufferMemory
-from src import LLM_gradioAPI
+from src import LLM_hugging_chat
 from src import topics_from_pdf
 from src import qa_convertational_chain_function
 from langchain.llms import OpenAI
 from pages.about import intro_html, author_html
-from src.LLM_hugging_chat import LLM_hugging_chat
 
 css = """
 footer {visibility: hidden}
@@ -32,7 +31,7 @@ def input_openai_key(model):
 def input_model(key):
     """
     The user is force to introduce the key if openAI model selected,
-    thus defining the model.
+    thus setting this as the model.
     """
     llm = OpenAI(openai_api_key=key, max_tokens=-1)
     return {
@@ -154,6 +153,9 @@ with gr.Blocks(css=css, title="Pregunta al PDF") as demo:
                     placeholder="sk-V8V..."
                     )
                 
+                with gr.Accordion("Sobre la API key:"):
+                    gr.Markdown("Look at me...")
+                
         # Summary and processing notes
         with gr.Column(visible=False) as model_availability_note:
             gr.Markdown('\n ## <p style="text-align: center;">Cargando el modelo y resumiendo el documento...</p>')
@@ -229,5 +231,5 @@ with gr.Blocks(css=css, title="Pregunta al PDF") as demo:
         gr.HTML(author_html)
 
 demo.queue(concurrency_count=5,  max_size=10, api_open=False)
-#demo.launch()
-demo.launch(server_name="0.0.0.0", server_port=8080)
+demo.launch()
+#demo.launch(server_name="0.0.0.0", server_port=8080)
