@@ -5,7 +5,7 @@ from src import LLM_hugging_chat
 from src import topics_from_pdf
 from src import qa_convertational_chain_function
 from langchain.llms import OpenAI
-from pages.about import intro_html, author_html
+from pages.about import intro_html, author_html, openai_key_html
 
 css = """
 footer {visibility: hidden}
@@ -149,20 +149,23 @@ with gr.Blocks(css=css, title="Pregunta al PDF") as demo:
                 uploaded_file = gr.UploadButton("Subir pdf 📁", file_types=["document"])
             with gr.Column(scale=0.75, visible=False) as input_key:
                 model_api_textbox = gr.Textbox(
-                    label="Introducir OpenAI api key y precionar Enter",
+                    label="""Introducir la "API key" de OpenAi y precionar Enter""",
                     placeholder="sk-V8V..."
                     )
                 
-                with gr.Accordion("Sobre la API key:"):
-                    gr.Markdown("Look at me...")
+                with gr.Accordion("""Click para mayor información sobre la "API key" de OpenAi:""", open=False):
+                    gr.HTML(openai_key_html)
                 
         # Summary and processing notes
         with gr.Column(visible=False) as model_availability_note:
             gr.Markdown('\n ## <p style="text-align: center;">Cargando el modelo y resumiendo el documento...</p>')
-            gr.Markdown('<p style="text-align: center;">Esto no debería demorar más de un minuto para documentos de menos de 30 páginas. \
+            gr.Markdown('<p style="text-align: center;">Esto no debería demorar más de un minuto para \
+                        documentos de menos de 30 páginas. \
                         Si no hay respuesta, puede que el modelo se encuentre temporalmente fuera de servicio. \
                         En este caso, refrescar la página y seleccionar otro modelo en el menú ubicado en la parte superior izquierda. \
                         Pronto se darán mas opciones.</p>')
+            gr.Markdown('<p style="text-align: center;"> Para documentos extensos, esto puede demorar \
+                        varios minutos.</p>')
         output_summary = gr.Textbox(label="Breve resumen del documento")
         with gr.Column(visible=False) as processing_note:
             gr.Markdown('\n ## <p style="text-align: center;">Procesando PDF...</p>')
@@ -174,6 +177,8 @@ with gr.Blocks(css=css, title="Pregunta al PDF") as demo:
             chatbot = gr.Chatbot()
             output_references = gr.components.Textbox(label="Referencias")
             clear_chat_memory = gr.Button(value="Borrar chat")
+        
+        gr.Markdown("Versión 0.1")
 
         # Interactivity
         model_dropdown.input(
