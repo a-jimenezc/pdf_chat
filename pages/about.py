@@ -14,11 +14,11 @@ openai_key_html = """
         su uso, dado el costo que representa. Por ejemplo, para resumir el documento, 
         primero este se preprocesa en nuestros servidores con algoritmos de texto. 
         Una vez se extrae la información clave, solo hace falta una única llamada a gpt 3.5 
-        mediante el uso de la "API key" para estructurar la información en lenguaje natural y así 
+        mediante el uso de la "API key" para estructurar la información en lenguaje natural y 
         presentar el resumen en forma de índice. Otra forma de limitar las llamadas a la "API" de 
         OpenAi es mediante el uso de un modelo generador de "Embeddings" instalado en nuestros
         servidores. Estos "Embeddings" son vectores que representan a los párrafos de texto y son 
-        esenciales para el chat. De esta forma y se hace innecesario el uso de los "Embeddings" de
+        esenciales para el chat. De esta forma se hace innecesario el uso de los "Embeddings" de
         OpenAi, haciendo factible trabajar con documentos muy extensos sin incurrir en costos adicionales. 
         <br>
         <br>
