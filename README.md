@@ -33,17 +33,18 @@ python app.py
 The main goal of this project is to enable chatting with a PDF document, regardless of its size and without incurring any additional cost. This was achieved with the help of open source libaries and resources. The following were the main ideas
 
 ### Summarization with LDA
-Returning a brief summary of the whole document helps the user to have an idea of the content, making it easier to start chatting. LLMs could easily summarize documents, but the computational cost for large documents would make using them for the whole document prohibitively expensive. So, some preprossessing was needed. **LDA** (Latent Dirichlet Allocatioin) is a great algorithm for document processing. It yields a list of words per topic, with the possiblility to control the number of topics and words per topic. Then, the output word lists could be feeded to an LLM and ask it to describe them in natural language, thus extracting the main ideas from the document. In this case, the summary is given in a table-of-content format.
+Returning a brief summary of the document helps the user to have an idea of the content, making it easier to start chatting. LLMs could easily summarize documents, but the computational cost for large documents would make using them for the whole document prohibitively expensive. So, some preprossessing was needed. **LDA** (Latent Dirichlet Allocatioin) is a great algorithm for document processing. It yields a list of words per topic, with the possiblility to control the number of topics and words per topic. Then, the output word lists could be feeded to an LLM and ask it to describe them in natural language, thus extracting the main ideas from the document. In this case, the summary is given in a table-of-content format.
 
 ### Local Embeddings
 Creating a vector database for a one thousand page book would require a lot of calls to an embedding generator. Luckily, those models are relarively small and can be run in consumer hardware. The library **[SentenceTransformers](https://www.sbert.net)** is a "Python framework for state-of-the-art sentence, text and image embeddings". In this case, [Multi-Lingual Models](https://www.sbert.net/docs/pretrained_models.html#multi-lingual-models) were necessary, due to the multilingual purpose of the application. *distiluse-base-multilingual-cased-v1* worked fine after some testing, so this was used.
 
 ### HugChat, Unoficial Hugging Chat API
-It was diffa free LLM API
+There were several options for free LLM support. One promising option was [Petal](https://github.com/bigscience-workshop/petals), but the size and the speed of generation were important limitations. Luckily, again, the library [hugchat](https://github.com/Soulter/hugging-chat-api) by Soulter offered an unofficial API for [Hugging Chat](https://huggingface.co/chat/). Currently, the model powering Hugging Chat is [LLaMA 2](https://huggingface.co/meta-llama/Llama-2-70b-chat-hf), from Meta. So, **the terms of use, limitations, caveats, and licencing** from both, LLaMA 2 and Hugging Chat, apply when using this web application. Please, follow the previous links for more information.
 
 
 ### Gradio Suport for Chat Applications
 
+### Lang Chain as an orchestration library
 
 
 
