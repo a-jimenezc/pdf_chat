@@ -15,4 +15,16 @@ The simplest way to try the app is to follow the link:
 
 [https://pdf-chat-q3sojgpqiq-uc.a.run.app/](https://pdf-chat-q3sojgpqiq-uc.a.run.app/)
 
-It was   deployed using the serverless service from Google, *Cloud Run*.
+It was deployed with Docker and using the serverless service from Google, *Cloud Run*.
+
+### Local installation
+For a local installation run:
+
+```bash
+git clone https://github.com/a-jimenezc/pdf_chat
+cd pdf_chat
+pip install -r requirements.txt
+python download_sentence_transformer.py
+python app.py
+```
+
