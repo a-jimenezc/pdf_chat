@@ -1,4 +1,5 @@
 import time
+import os
 import gradio as gr
 from langchain.memory import ConversationBufferMemory
 from src import LLM_hugging_chat
@@ -18,15 +19,28 @@ def input_openai_key(model):
     Run when selecting the dropdown menu
     """
     if model == "GPT-3.5 Turbo":
+        print("model gpt")
         return {
             input_key : gr.update(visible=True),
             upload_uploaded_file : gr.update(visible=False),
+            llm_var : None
+                }
+    elif model == "LLaMA 2-HugChat-s2 (beta)":
+        llm_model = None
+        print("model s2")
+        return {
+            input_key : gr.update(visible=True),
+            upload_uploaded_file : gr.update(visible=False),
+            llm_var : llm_model
                 }
     else:
+        llm_model = None
+        print("default")
         return {
             input_key : gr.update(visible=False),
             upload_uploaded_file : gr.update(visible=True),
-                }
+            llm_var : llm_model 
+            }
 
 def input_model(key):
     """
@@ -47,7 +61,12 @@ def summary(file, llm_model):
 
     # To use as default
     if llm_model is None:
-        llm_model = LLM_hugging_chat(n=2000)
+        llm_model = LLM_hugging_chat(
+            n=2000, 
+            hugging_face_account=os.environ.get("hugging_face_account"), 
+            hugging_face_psw=os.environ.get("hugging_face_psw")
+            )
+        llm_model.initialize_hugging_face()
 
     num_topics = 5
     words_per_topic = 30 # optimizar
@@ -141,8 +160,12 @@ with gr.Blocks(css=css, title="Pregunta al PDF") as demo:
         with gr.Row(equal_height=True):
             with gr.Column(scale=0.25, min_width=0):
                 model_dropdown = gr.Dropdown(
-                    choices=["LLaMA 2 (experimental)", "GPT-3.5 Turbo"],
-                    value="LLaMA 2 (experimental)",
+                    choices=[
+                        "LLaMA 2-HugChat-s1 (beta)",
+                        "LLaMA 2-HugChat-s2 (beta)",
+                        "GPT-3.5 Turbo"
+                        ],
+                    value="LLaMA 2-HugChat-s1 (beta)",
                     label="Seleccionar modelo"
                     )
             with gr.Column(scale=0.75, visible=True, min_width=0) as upload_uploaded_file:
@@ -184,7 +207,7 @@ with gr.Blocks(css=css, title="Pregunta al PDF") as demo:
         model_dropdown.input(
             input_openai_key,
             [model_dropdown],
-            [input_key, upload_uploaded_file]
+            [input_key, upload_uploaded_file, llm_var]
             )
         model_api_textbox.submit(
             input_model,
@@ -236,5 +259,5 @@ with gr.Blocks(css=css, title="Pregunta al PDF") as demo:
         gr.HTML(author_html)
 
 demo.queue(concurrency_count=5,  max_size=10, api_open=False)
-#demo.launch()
-demo.launch(server_name="0.0.0.0", server_port=8080)
+demo.launch()
+#demo.launch(server_name="0.0.0.0", server_port=8080)
