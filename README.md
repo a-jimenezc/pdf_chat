@@ -18,7 +18,7 @@ The simplest way to try the app is to follow the link:
 It was deployed with Docker and using the serverless service from Google, *Cloud Run*.
 
 ### Local installation
-For a local installation run:
+To run the web app on your local machine install python 3.10 and git. Then run on the terminal:
 
 ```bash
 git clone https://github.com/a-jimenezc/pdf_chat
@@ -52,17 +52,17 @@ The application was built using gradio. It offers back-end and front-end support
 ### LangChain, the orchestration library
 LangChain made this project possible. It offers a rich set of tools for working wiht LLMs. Including template for prompts, vector database support, and more.
 
-### To do
+## To do
 * Add multilanguage support
 * Add more LLMs from which to chose
 
-### Licence
+## Licence
 GNU General Public License v2.0
 
-### Disclaimer
+## Disclaimer
 This application uses third-party libraries and resources. So, its use is limited under the terms of use and conditions and licences for those libraries and resources.
 
-### Author
+## Author
 [Antonio Jimenez Caballero](https://www.linkedin.com/in/antonio-jimnzc/)
 
 
