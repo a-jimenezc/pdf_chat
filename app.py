@@ -145,9 +145,9 @@ with gr.Blocks(css=css, title="Pregunta al PDF") as demo:
                     value="LLaMA 2 (experimental)",
                     label="Seleccionar modelo"
                     )
-            with gr.Column(scale=0.75, visible=True) as upload_uploaded_file:
+            with gr.Column(scale=0.75, visible=True, min_width=0) as upload_uploaded_file:
                 uploaded_file = gr.UploadButton("Subir pdf 📁", file_types=["document"])
-            with gr.Column(scale=0.75, visible=False) as input_key:
+            with gr.Column(scale=0.75, visible=False, min_width=0) as input_key:
                 model_api_textbox = gr.Textbox(
                     label="""Introducir la "API key" de OpenAi y precionar Enter""",
                     placeholder="sk-V8V..."
