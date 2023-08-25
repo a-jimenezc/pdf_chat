@@ -57,11 +57,13 @@ LangChain made this project possible. It offers a rich set of tools for working 
 * Add more LLMs from which to chose
 
 ### Licence
-
-
+GNU General Public License v2.0
 
 ### Disclaimer
 This application uses third-party libraries and resources. So, its use is limited under the terms of use and conditions and licences for those libraries and resources.
+
+### Author
+[Antonio Jimenez Caballero](https://www.linkedin.com/in/antonio-jimnzc/)
 
 
 
