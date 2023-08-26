@@ -58,7 +58,7 @@ def show_model_caveat():
     return {model_availability_note : gr.update(visible=True)}
 
 def summary(file, llm_model):
-
+    print(os.environ.get("hugging_face_account"))
     # To use as default
     if llm_model is None:
         llm_model = LLM_hugging_chat(
@@ -66,7 +66,6 @@ def summary(file, llm_model):
             hugging_face_account=os.environ.get("hugging_face_account"), 
             hugging_face_psw=os.environ.get("hugging_face_psw")
             )
-        llm_model.initialize_hugging_face()
 
     num_topics = 5
     words_per_topic = 30 # optimizar

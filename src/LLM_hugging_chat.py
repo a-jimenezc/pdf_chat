@@ -28,26 +28,19 @@ class LLM_hugging_chat(LLM):
     """
 
     n: int
-    hugging_face_account : str
-    hugging_face_psw : str
+    hugging_face_account: str
+    hugging_face_psw: str
 
-    sign = Login(hugging_face_account, hugging_face_psw)
-    cookies = sign.login()
-    chatbot = hugchat.ChatBot(cookies=cookies.get_dict())
-
-    # def __init__(self, hugging_face_account : str, hugging_face_psw : str, *args, **kwargs):
-    #     super().__init__(*args, **kwargs)  # Call the BaseLLM's __init__
+    # def __init__(self, n: int, hugging_face_account: str, hugging_face_psw: str, *args, **kwargs):
+    #     super().__init__(*args, **kwargs)  # Call the constructor of the parent class if needed
+    #     print(hugging_face_account)
+    #     self.n = n
     #     self.hugging_face_account = hugging_face_account
     #     self.hugging_face_psw = hugging_face_psw
 
-    #     self._initialize_hugging_face()
-
-
-    # def _initialize_hugging_face(self):
     #     sign = Login(self.hugging_face_account, self.hugging_face_psw)
     #     cookies = sign.login()
     #     self.chatbot = hugchat.ChatBot(cookies=cookies.get_dict())
-
 
     @property
     def _llm_type(self) -> str:
@@ -58,7 +51,6 @@ class LLM_hugging_chat(LLM):
         prompt: str,
         stop: Optional[List[str]] = None,
         run_manager: Optional[CallbackManagerForLLMRun] = None,
-        chatbot = None
     ) -> str:
         """
         Make an API call to the Hugging ChatBot using the specified prompt and return the response.
@@ -72,12 +64,17 @@ class LLM_hugging_chat(LLM):
             str: The response from the Hugging ChatBot.
         """
         # Remove the restriction on the stop parameter
-        if chatbot is None:
-            chatbot = self.chatbot
+        # if chatbot is None:
+        #     chatbot = self.chatbot
         if stop is not None:
             raise ValueError("stop kwargs are not permitted.")
+        
 
-        result = chatbot.chat(prompt, temperature=0.1)
+        sign = Login(self.hugging_face_account, self.hugging_face_psw)
+        cookies = sign.login()
+        self.chatbot = hugchat.ChatBot(cookies=cookies.get_dict())
+
+        result = self.chatbot.chat(prompt, temperature=0.1)
 
         # Return the response from the API
         return result
