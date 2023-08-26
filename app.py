@@ -1,4 +1,5 @@
 import time
+import os
 import gradio as gr
 from langchain.memory import ConversationBufferMemory
 from src import LLM_hugging_chat
@@ -7,57 +8,89 @@ from src import qa_convertational_chain_function
 from langchain.llms import OpenAI
 from pages.about import intro_html, author_html, openai_key_html
 
+# Variables
+email_1 = os.environ.get("HF_EMAIL_1")
+psw_1 = os.environ.get("HF_PW_1")
+
+email_2 = os.environ.get("HF_EMAIL_2")
+psw_2 = os.environ.get("HF_PW_2")
+
+model_llama2_1 = "LLaMA 2-HugChat-s1 (experimental)"
+model_llama2_2 = "LLaMA 2-HugChat-s2 (experimental)"
+model_gpt_1 = "GPT-3.5 Turbo (recomendado)"
+
+
 css = """
 footer {visibility: hidden}
 .feedback textarea {font-size: 40px !important} 
 """
 
 # Functions
-def input_openai_key(model):
+def input_model(model):
     """
-    Run when selecting the dropdown menu
+    Run when selecting the dropdown menu. This sets which model to use.
     """
-    if model == "GPT-3.5 Turbo":
+    if model == model_gpt_1:
+        print(model_gpt_1)
         return {
             input_key : gr.update(visible=True),
             upload_uploaded_file : gr.update(visible=False),
+            llm_str_var : model_gpt_1
                 }
-    else:
+    elif model == model_llama2_2:
+        print(model_llama2_2)
         return {
             input_key : gr.update(visible=False),
             upload_uploaded_file : gr.update(visible=True),
+            llm_str_var : model_llama2_2
                 }
+    else:
+        print(model_llama2_1)
+        return {
+            input_key : gr.update(visible=False),
+            upload_uploaded_file : gr.update(visible=True),
+            llm_str_var : model_llama2_1 # default is choosen in summary
+            }
 
-def input_model(key):
+def input_openai_key(key):
     """
-    The user is force to introduce the key if openAI model selected,
-    thus setting this as the model.
+    The user is force to introduce the key if openAI model selected.
     """
-    llm = OpenAI(openai_api_key=key, max_tokens=-1)
     return {
         input_key : gr.update(visible=False),
         upload_uploaded_file : gr.update(visible=True),
-        llm_var : llm
+        openai_key_var : key
             }
 
 def show_model_caveat():
     return {model_availability_note : gr.update(visible=True)}
 
-def summary(file, llm_model):
-
+def summary(file, llm_model_str, openai_key):
     # To use as default
-    if llm_model is None:
-        llm_model = LLM_hugging_chat(n=2000)
+    if llm_model_str == model_gpt_1:
+        llm = OpenAI(openai_api_key=openai_key, max_tokens=-1)
+    elif llm_model_str == model_llama2_2:
+        llm = LLM_hugging_chat(
+            n=2000, 
+            hugging_face_account=email_2,
+            hugging_face_psw=psw_2
+            )
+    else:
+        llm = LLM_hugging_chat(
+            n=2000, 
+            hugging_face_account=email_1,
+            hugging_face_psw=psw_1
+            )
 
     num_topics = 5
     words_per_topic = 30 # optimizar
     file = file.name
-    topics = topics_from_pdf(llm_model, file, num_topics, words_per_topic)
+    topics = topics_from_pdf(llm, file, num_topics, words_per_topic)
     return {
         output_summary : topics,
         file_doc_var : file,
         processing_note: gr.update(visible=True),
-        llm_var : llm_model,
+        llm_var : llm,
         model_availability_note : gr.update(visible=False),
     }
 
@@ -127,6 +160,8 @@ with gr.Blocks(css=css, title="Pregunta al PDF") as demo:
     qa_chain_var = gr.State()
     memory_var = gr.State()
     response_var = gr.State() # to allow streaming
+    llm_str_var = gr.State()
+    openai_key_var = gr.State()
     llm_var = gr.State()
 
     # Title
@@ -141,13 +176,17 @@ with gr.Blocks(css=css, title="Pregunta al PDF") as demo:
         with gr.Row(equal_height=True):
             with gr.Column(scale=0.25, min_width=0):
                 model_dropdown = gr.Dropdown(
-                    choices=["LLaMA 2 (experimental)", "GPT-3.5 Turbo"],
-                    value="LLaMA 2 (experimental)",
+                    choices=[
+                        model_llama2_1,
+                        model_llama2_2,
+                        model_gpt_1
+                        ],
+                    value=model_llama2_1,
                     label="Seleccionar modelo"
                     )
-            with gr.Column(scale=0.75, visible=True) as upload_uploaded_file:
+            with gr.Column(scale=0.75, visible=True, min_width=0) as upload_uploaded_file:
                 uploaded_file = gr.UploadButton("Subir pdf 📁", file_types=["document"])
-            with gr.Column(scale=0.75, visible=False) as input_key:
+            with gr.Column(scale=0.75, visible=False, min_width=0) as input_key:
                 model_api_textbox = gr.Textbox(
                     label="""Introducir la "API key" de OpenAi y precionar Enter""",
                     placeholder="sk-V8V..."
@@ -182,29 +221,33 @@ with gr.Blocks(css=css, title="Pregunta al PDF") as demo:
 
         # Interactivity
         model_dropdown.input(
-            input_openai_key,
+            input_model,
             [model_dropdown],
-            [input_key, upload_uploaded_file]
+            [input_key, upload_uploaded_file, llm_str_var]
             )
         model_api_textbox.submit(
-            input_model,
+            input_openai_key,
             [model_api_textbox],
-            [input_key, upload_uploaded_file,
-             llm_var]
+            [input_key, upload_uploaded_file, openai_key_var]
              )                 
         uploaded_file.upload(
             show_model_caveat,
             None,
             [model_availability_note],
             ).success(summary,
-                [uploaded_file, llm_var],
+                [uploaded_file, llm_str_var, openai_key_var],
                 [output_summary, file_doc_var, processing_note, llm_var, model_availability_note],
                 queue=False
                 ).success(
                     conversation_vars,
                     [file_doc_var, llm_var],
                     [memory_var, qa_chain_var, output_col, processing_note]
-                    )
+                    ).success( # delete displayed chat
+                        lambda: None,
+                        None,
+                        chatbot,
+                        queue=False
+                        )
         input_msg.submit(
             respond,
             [input_msg, chatbot, memory_var, qa_chain_var],
