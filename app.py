@@ -60,7 +60,15 @@ def input_openai_key(key):
         input_key : gr.update(visible=False),
         upload_uploaded_file : gr.update(visible=True),
         openai_key_var : key
-            }
+        }
+
+def input_lang(language):
+    """
+    The user is force to introduce the key if openAI model selected.
+    """
+    return {
+        lang_var : language
+        }
 
 def show_model_caveat():
     return {model_availability_note : gr.update(visible=True)}
@@ -163,6 +171,7 @@ with gr.Blocks(css=css, title="Pregunta al PDF") as demo:
     llm_str_var = gr.State()
     openai_key_var = gr.State()
     llm_var = gr.State()
+    lang_var = gr.State()
 
     # Title
     gr.Markdown("\n")
@@ -183,6 +192,14 @@ with gr.Blocks(css=css, title="Pregunta al PDF") as demo:
                         ],
                     value=model_llama2_1,
                     label="Seleccionar modelo"
+                    )
+                lang_dropdown = gr.Dropdown(
+                    choices=[
+                        "Español",
+                        "English",
+                        ],
+                    value="Español",
+                    label="Seleccionar lenguaje de respuesta"
                     )
             with gr.Column(scale=0.75, visible=True, min_width=0) as upload_uploaded_file:
                 uploaded_file = gr.UploadButton("Subir pdf 📁", file_types=["document"])
@@ -224,6 +241,11 @@ with gr.Blocks(css=css, title="Pregunta al PDF") as demo:
             input_model,
             [model_dropdown],
             [input_key, upload_uploaded_file, llm_str_var]
+            )
+        lang_dropdown.input(
+            input_lang,
+            [lang_dropdown],
+            [lang_var]
             )
         model_api_textbox.submit(
             input_openai_key,
@@ -280,5 +302,4 @@ with gr.Blocks(css=css, title="Pregunta al PDF") as demo:
 
 demo.queue(concurrency_count=5,  max_size=10, api_open=False)
 demo.launch()
-
 #demo.launch(server_name="0.0.0.0", server_port=8080)
