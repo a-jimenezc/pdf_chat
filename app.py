@@ -232,7 +232,8 @@ with gr.Blocks(css=css, title="Pregunta al PDF") as demo:
         output_summary = gr.Textbox(label="Breve resumen del documento")
         with gr.Column(visible=False) as processing_note:
             gr.Markdown('\n ## <p style="text-align: center;">Procesando PDF...</p>')
-            gr.Markdown('<p style="text-align: center;">Esto podría demorar unos minutos.</p>')
+            gr.Markdown('<p style="text-align: center;">Para documentos extensos, esto podría demorar hasta 20 minutos. \
+                        En este caso, se recomienda usar el modelo GPT-3.5 Turbo.</p>')
         
         # Chat and references
         with gr.Column(visible=False) as output_col:
@@ -241,7 +242,7 @@ with gr.Blocks(css=css, title="Pregunta al PDF") as demo:
             output_references = gr.components.Textbox(label="Referencias")
             clear_chat_memory = gr.Button(value="Borrar chat")
         
-        gr.Markdown("Versión 0.1")
+        gr.Markdown("Versión 0.2")
 
         # Interactivity
         model_dropdown.input(

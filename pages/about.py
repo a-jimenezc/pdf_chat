@@ -44,14 +44,14 @@ intro_html = """
 <html>
 <body>
     <p>
-        Esta app permite hacer preguntas a documentos en formato PDF en español.
-        Funciona con documentos de diez páginas, así como con libros de más
+        Esta app permite hacer preguntas a documentos en formato PDF y
+        funciona con documentos de diez páginas, así como con libros de más
         de mil páginas. Esto es posible gracias al uso de
         los Grandes Modelos de Lenguaje (LLM por sus siglas en inglés),
         Bases de Datos Vectoriales y algoritmos de procesamiento de texto.
-        Adicionalmente, la app genera un índice
-        basado en el contenido del documento. Este índice ofrece una guía al momento de
-        hacer pregutnas. Finalmente, la app entrega los extractos del documento en los cuales
+        Así mismo, la app genera un índice
+        basado en el contenido del documento, el cual ofrece una guía al momento de
+        hacer preguntas. Adicionalmente, la app entrega los extractos del documento en los cuales
         basó su respuesta. Esto es muy útil en caso de necesitar validar la respuesta dada por el modelo.
     </p>
 </body>
