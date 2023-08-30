@@ -73,7 +73,7 @@ def input_lang(language):
 def show_model_caveat():
     return {model_availability_note : gr.update(visible=True)}
 
-def summary(file, llm_model_str, openai_key):
+def summary(file, llm_model_str, openai_key, lang):
     # To use as default
     if llm_model_str == model_gpt_1:
         llm = OpenAI(openai_api_key=openai_key, max_tokens=-1)
@@ -93,7 +93,7 @@ def summary(file, llm_model_str, openai_key):
     num_topics = 5
     words_per_topic = 30 # optimizar
     file = file.name
-    topics = topics_from_pdf(llm, file, num_topics, words_per_topic)
+    topics = topics_from_pdf(llm, file, num_topics, words_per_topic, lang)
     return {
         output_summary : topics,
         file_doc_var : file,
@@ -102,7 +102,7 @@ def summary(file, llm_model_str, openai_key):
         model_availability_note : gr.update(visible=False),
     }
 
-def conversation_vars(file, llm_model):
+def conversation_vars(file, llm_model, lang):
     """
     Initializes the chat sesion variables and stores them temporarily.
     """
@@ -110,7 +110,14 @@ def conversation_vars(file, llm_model):
     retreiver_search_type = "mmr"
     retreiver_k = 5
     memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
-    qa_chain = qa_convertational_chain_function(file, llm_model, chain_type, retreiver_search_type, retreiver_k)
+    qa_chain = qa_convertational_chain_function(
+        file, 
+        llm_model, 
+        chain_type, 
+        retreiver_search_type, 
+        retreiver_k,
+        lang
+        )
     return {
         memory_var : memory, 
         qa_chain_var : qa_chain,
@@ -257,12 +264,12 @@ with gr.Blocks(css=css, title="Pregunta al PDF") as demo:
             None,
             [model_availability_note],
             ).success(summary,
-                [uploaded_file, llm_str_var, openai_key_var],
+                [uploaded_file, llm_str_var, openai_key_var, lang_var],
                 [output_summary, file_doc_var, processing_note, llm_var, model_availability_note],
                 queue=False
                 ).success(
                     conversation_vars,
-                    [file_doc_var, llm_var],
+                    [file_doc_var, llm_var, lang_var],
                     [memory_var, qa_chain_var, output_col, processing_note]
                     ).success( # delete displayed chat
                         lambda: None,
@@ -301,5 +308,5 @@ with gr.Blocks(css=css, title="Pregunta al PDF") as demo:
         gr.HTML(author_html)
 
 demo.queue(concurrency_count=5,  max_size=10, api_open=False)
-demo.launch()
-#demo.launch(server_name="0.0.0.0", server_port=8080)
+#demo.launch()
+demo.launch(server_name="0.0.0.0", server_port=8080)
