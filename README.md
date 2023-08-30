@@ -54,7 +54,7 @@ LangChain made this project possible. It offers a rich set of tools for working 
 
 ## To do
 * Add multilanguage support
-* Add more LLMs from which to chose
+* Add more LLMs to choose from.
 
 ## Licence
 GNU General Public License v2.0
