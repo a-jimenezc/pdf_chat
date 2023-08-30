@@ -1,6 +1,6 @@
 # Ask the PDF
 
-This repository contains the source code for the web application: Ask the PDF. The application enables users to upload a PDF document and, regardless of its size, begin asking questions about it. Additionally, it provides a concise summary in a table-of-contents format as a guide. Initially designed for Spanish speakers, the application was later expanded for usage in English as well. It utilizes LLaMA 2 or gpt-3.5 Turbo as its language model; further details are provided below.
+This repository contains the source code for the web application: Ask the PDF. The application enables users to upload a PDF document and, regardless of its size, begin asking questions about it. Additionally, it provides a concise summary in a table-of-contents format as a guide. It was designed for Spanish speakers, but the application also supports responses in English. It utilizes LLaMA 2 or gpt-3.5 Turbo as its language model; further details are provided below.
 
 ## Requirements
 
