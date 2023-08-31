@@ -1,6 +1,6 @@
 # Pregutna al PDF
 
-English | [Español](README_es.md)
+[English](README.md) | Español
 
 Este repositorio contiene el código fuente para la aplicación web: Pregunta al PDF. La aplicación permite a los usuarios cargar un documento PDF y, independientemente de su tamaño, comenzar a hacer preguntas sobre él. Además, proporciona un resumen conciso en formato de tabla de contenido como guía. La aplicación esta en español, pero la aplicación también admite respuestas en inglés. Utiliza LLaMA 2 o gpt-3.5 Turbo como su modelo de lenguaje; se proporcionan más detalles a continuación.
 
