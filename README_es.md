@@ -33,8 +33,8 @@ python app.py
 Antes de interactuar con LLaMA 2, es necesario crear una cuenta en [Hugging Face](https://huggingface.co/) y establecer las siguientes variables de entorno:
 
 ```bash
-HF_EMAIL_1 <ingresar correo electrónico registrado en Hugging Face>
-HF_PW_1 <ingresar contraseña de Hugging Face>
+HF_EMAIL_1 "ingresar correo electrónico registrado en Hugging Face"
+HF_PW_1 "ingresar contraseña de Hugging Face"
 ```
 
 Los comandos exactos para configurar estas variables de entorno dependerán del sistema. También tener en cuenta que es posible agregar una segunda cuenta, con *HF_EMAIL_2* y *HF_PW_2*.
