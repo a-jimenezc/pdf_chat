@@ -29,6 +29,15 @@ pip install -r requirements.txt
 python download_sentence_transformer.py
 python app.py
 ```
+Before interacting with LLaMA 2, it is necessary to create an account on [Hugging Face](https://huggingface.co/) and set the following environmental variables:
+
+```bash
+HF_EMAIL_1 <enter your Hugging Face registered email>
+HF_PW_1 <enter your Hugging Face Password>
+```
+
+The exact commands to set these environmental variables will depend on the system. Also note that it is possible to add a second account, with *HF_EMAIL_2* and *HF_PW_2*.
+
 
 ## Project Description
 
