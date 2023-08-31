@@ -15,7 +15,7 @@ This repository contains the source code for the web application: Ask the PDF. T
 ### Web App
 The simplest way to try the app is to follow the link: 
 
-[https://pdf-chat-q3sojgpqiq-uc.a.run.app/](https://pdf-chat-q3sojgpqiq-uc.a.run.app/)
+[https://pdf.dsapp.me/](https://pdf.dsapp.me/)
 
 It was deployed with Docker and using the serverless service from Google, *Cloud Run*.
 
