@@ -20,7 +20,7 @@ The simplest way to try the app is to follow the link:
 It was deployed with Docker and using the serverless service from Google, *Cloud Run*.
 
 ### Local installation
-To run the web app on your local machine, install python 3.10 (setting up a *conda* environment is recommended) and git. Then, run on the terminal:
+To run the web app on your local machine, install python 3.10 (setting up a **conda** environment is recommended) and git. Then, run on the terminal:
 
 ```bash
 git clone https://github.com/a-jimenezc/pdf_chat
