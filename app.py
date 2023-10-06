@@ -89,6 +89,8 @@ def summary(file, llm_model_str, openai_key, lang):
             hugging_face_account=email_1,
             hugging_face_psw=psw_1
             )
+    # Momentary solution
+    llm = OpenAI(openai_api_key=openai_key, max_tokens=-1)
 
     num_topics = 5
     words_per_topic = 30 # optimizar
@@ -193,11 +195,11 @@ with gr.Blocks(css=css, title="Pregunta al PDF") as demo:
             with gr.Column(scale=0.25, min_width=0):
                 model_dropdown = gr.Dropdown(
                     choices=[
-                        model_llama2_1,
-                        model_llama2_2,
+                        #model_llama2_1,
+                        #model_llama2_2,
                         model_gpt_1
                         ],
-                    value=model_llama2_1,
+                    value=model_gpt_1,#model_llama2_1,
                     label="Seleccionar modelo"
                     )
                 lang_dropdown = gr.Dropdown(
@@ -208,9 +210,9 @@ with gr.Blocks(css=css, title="Pregunta al PDF") as demo:
                     value="Español",
                     label="Seleccionar lenguaje de respuesta"
                     )
-            with gr.Column(scale=0.75, visible=True, min_width=0) as upload_uploaded_file:
+            with gr.Column(scale=0.75, visible=False, min_width=0) as upload_uploaded_file:
                 uploaded_file = gr.UploadButton("Subir pdf 📁", file_types=["document"])
-            with gr.Column(scale=0.75, visible=False, min_width=0) as input_key:
+            with gr.Column(scale=0.75, visible=True, min_width=0) as input_key:
                 model_api_textbox = gr.Textbox(
                     label="""Introducir la "API key" de OpenAi y precionar Enter""",
                     placeholder="sk-V8V..."
