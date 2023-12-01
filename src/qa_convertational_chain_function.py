@@ -17,6 +17,7 @@ def qa_convertational_chain_function(
     """
     Generates a ConversationalRetrievalChain object for question-answering based on input parameters.
 
+    
     This function constructs and configures a ConversationalRetrievalChain for question-answering using 
     the provided parameters. The chain is designed to generate relevant answers based on the given context 
     and questions.

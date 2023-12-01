@@ -35,6 +35,7 @@ openai_key_html = """
         Sin embargo, y repitiendo la nota inicial, esta aplicación usa este valor de forma temporal,
         mientras dure su sesión. Cada ventana en que se abre la aplicación, es una sesión diferente, incluso
         usando el mismo navegador.
+        <br>
     </p>
 </body>
 </html>

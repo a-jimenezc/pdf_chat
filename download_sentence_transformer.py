@@ -1,3 +1,4 @@
+"""Downloads the sentence-transformer model"""
 from langchain.embeddings import HuggingFaceEmbeddings
 
 embeddings = HuggingFaceEmbeddings(

@@ -14,6 +14,7 @@ class LLM_gradioAPI(LLM):
         client_api (str): The URL of the Gradio API endpoint.
         api_name (str): The name of the API to call on the Gradio server.
         n (int): words to retrieve.
+        
 
     Methods:
         _llm_type: Returns the type of LLM, which is 'custom' for this wrapper.

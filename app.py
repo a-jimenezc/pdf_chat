@@ -38,7 +38,7 @@ def input_model(model):
             llm_str_var : model_gpt_1
                 }
     elif model == model_llama2_2:
-        #print(model_llama2_2)
+        # print(model_llama2_2)
         return {
             input_key : gr.update(visible=False),
             upload_uploaded_file : gr.update(visible=True),

@@ -8,6 +8,7 @@ class LLM_hugging_chat(LLM):
 
     """
     This class represents a language model based on the Hugging Chat API.
+    
 
     Attributes:
         n (int): words to retrieve.
