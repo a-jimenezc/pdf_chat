@@ -20,8 +20,10 @@ class LLM_hugging_chat(LLM):
         _llm_type(self) -> str:
             Get the type of the language model.
 
-        _call(self, prompt: str, stop: Optional[List[str]] = None, run_manager: Optional[CallbackManagerForLLMRun] = None) -> str:
-            Make an API call to the Hugging ChatBot using the specified prompt and return the response.
+        _call(self, prompt: str, stop: Optional[List[str]] = None, run_manager:
+            Optional[CallbackManagerForLLMRun] = None) -> str:
+            Make an API call to the Hugging ChatBot using the specified prompt 
+            and return the response.
 
         _identifying_params(self) -> Mapping[str, Any]:
             Get the identifying parameters of the language model.
@@ -49,12 +51,14 @@ class LLM_hugging_chat(LLM):
         chatbot=None
     ) -> str:
         """
-        Make an API call to the Hugging ChatBot using the specified prompt and return the response.
+        Make an API call to the Hugging ChatBot using the specified prompt and 
+        return the response.
 
         Parameters:
             prompt (str): The prompt or input text for the API call.
             stop (List[str], optional): List of stop words. Not used in this context.
-            run_manager (CallbackManagerForLLMRun, optional): Callback manager for LLM run. Not used in this context.
+            run_manager (CallbackManagerForLLMRun, optional): Callback manager for LLM run. 
+            Not used in this context.
 
         Returns:
             str: The response from the Hugging ChatBot.
@@ -67,8 +71,8 @@ class LLM_hugging_chat(LLM):
             raise ValueError("stop kwargs are not permitted.")
 
         # Return the response from the API
-        result = chatbot.chat(prompt, temperature=0.1)
-        return result
+        result = chatbot.query(prompt)
+        return str(result)
 
     @property
     def _identifying_params(self) -> Mapping[str, Any]:

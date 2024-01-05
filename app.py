@@ -15,8 +15,8 @@ psw_1 = os.environ.get("HF_PW_1")
 email_2 = os.environ.get("HF_EMAIL_2")
 psw_2 = os.environ.get("HF_PW_2")
 
-model_llama2_1 = "LLaMA 2-HugChat-s1 (experimental)"
-model_llama2_2 = "LLaMA 2-HugChat-s2 (experimental)"
+model_llama2_1 = "Mixtral-8x7B-Instruct 1"
+model_llama2_2 = "Mixtral-8x7B-Instruct 2"
 model_gpt_1 = "GPT-3.5 Turbo (recomendado)"
 
 
@@ -31,21 +31,18 @@ def input_model(model):
     Run when selecting the dropdown menu. This sets which model to use.
     """
     if model == model_gpt_1:
-        #print(model_gpt_1)
         return {
             input_key : gr.update(visible=True),
             upload_uploaded_file : gr.update(visible=False),
             llm_str_var : model_gpt_1
                 }
     elif model == model_llama2_2:
-        # print(model_llama2_2)
         return {
             input_key : gr.update(visible=False),
             upload_uploaded_file : gr.update(visible=True),
             llm_str_var : model_llama2_2
                 }
     else:
-        #print(model_llama2_1)
         return {
             input_key : gr.update(visible=False),
             upload_uploaded_file : gr.update(visible=True),
@@ -90,7 +87,7 @@ def summary(file, llm_model_str, openai_key, lang):
             hugging_face_psw=psw_1
             )
     # Momentary solution
-    llm = OpenAI(openai_api_key=openai_key, max_tokens=-1)
+    #llm = OpenAI(openai_api_key=openai_key, max_tokens=-1)
 
     num_topics = 5
     words_per_topic = 30 # optimizar
@@ -195,11 +192,11 @@ with gr.Blocks(css=css, title="Pregunta al PDF") as demo:
             with gr.Column(scale=0.25, min_width=0):
                 model_dropdown = gr.Dropdown(
                     choices=[
-                        #model_llama2_1,
-                        #model_llama2_2,
+                        model_llama2_1,
+                        model_llama2_2,
                         model_gpt_1
                         ],
-                    value=model_gpt_1,#model_llama2_1,
+                    value=model_llama2_1,
                     label="Seleccionar modelo"
                     )
                 lang_dropdown = gr.Dropdown(
@@ -210,9 +207,9 @@ with gr.Blocks(css=css, title="Pregunta al PDF") as demo:
                     value="Español",
                     label="Seleccionar lenguaje de respuesta"
                     )
-            with gr.Column(scale=0.75, visible=False, min_width=0) as upload_uploaded_file:
+            with gr.Column(scale=0.75, visible=True, min_width=0) as upload_uploaded_file:
                 uploaded_file = gr.UploadButton("Subir pdf 📁", file_types=["document"])
-            with gr.Column(scale=0.75, visible=True, min_width=0) as input_key:
+            with gr.Column(scale=0.75, visible=False, min_width=0) as input_key:
                 model_api_textbox = gr.Textbox(
                     label="""Introducir la "API key" de OpenAi y precionar Enter""",
                     placeholder="sk-V8V..."
@@ -300,10 +297,6 @@ with gr.Blocks(css=css, title="Pregunta al PDF") as demo:
                 chatbot,
                 queue=False
                 )
-
-    # # Model Explanation Tab
-    # with gr.Tab("Modelos"):
-    #     gr.Markdown("## LLaMA 2")
 
     # About Tab
     with gr.Tab("Acerca de"):
