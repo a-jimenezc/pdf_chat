@@ -23,12 +23,21 @@ Fue implementada con Docker y utilizando el servicio *serverless* de Google, *Cl
 Para ejecutar la aplicación web localmente, instalar Python 3.10 y Git. Luego, ejecutar en la terminal:
 
 ```bash
+export HF_EMAIL_1=your.registered.email@mail.com
+export HF_PW_1=your_HuggingChat_password
+```
+
+```bash
 git clone https://github.com/a-jimenezc/pdf_chat
 cd pdf_chat
+python -m venv venv
+source venv/bin/activate
 pip install -r requirements.txt
 python download_sentence_transformer.py
 python app.py
 ```
+
+**HF_EMAIL_1** y **HF_PW_1** son las credenciales para una cuenta de HuggingChat. Es necesario registrarse para obtener una cuenta.
 
 ## Descripción del Proyecto
 
@@ -43,7 +52,7 @@ Crear una base de datos de vectores para un libro de mil páginas requeriría mu
 ### Soporte para LLM (Modelo de Lenguaje Grande)
 
 #### HugChat, API de Chat de Hugging no oficial
-La biblioteca [hugchat](https://github.com/Soulter/hugging-chat-api) de Soulter ofrece una API no oficial para [Hugging Chat](https://huggingface.co/chat/). Actualmente, el modelo que impulsa Hugging Chat es [LLaMA 2](https://huggingface.co/meta-llama/Llama-2-70b-chat-hf), de Meta. Por lo tanto, **los términos de uso, limitaciones, advertencias y licencias** estipulados tanto por LLaMA 2 como por Hugging Chat se aplican al usar esta aplicación web. Por favor, sigue los enlaces anteriores para obtener más información.
+La biblioteca [hugchat](https://github.com/Soulter/hugging-chat-api) de Soulter ofrece una API no oficial para [Hugging Chat](https://huggingface.co/chat/). El modelo utilizado cambia según los últimos avances en LLMs, por lo tanto, se recomienda visitar la página principal para encontrar la información actualizada. **Los términos de uso, limitaciones, advertencias y licencias** estipulados por Hugging Chat se aplican al usar esta aplicación web. Por favor, seguir los enlaces anteriores para obtener más información.
 
 #### API de OpenAI
 La aplicación también ofrece soporte para el modelo gpt-3.5 Turbo de OpenAI. Sin embargo, se requiere que los usuarios ingresen su propia clave API debido a los costos asociados. Tener en cuenta que esta información se guarda temporalmente en una base de datos por sesión. Una vez que se cierra la sesión, la clave API se elimina.
